@@ -1,0 +1,13 @@
+body {
+  background-color: #9b59b6;
+}
+
+.flag {
+  position: relative;
+}
+
+.country-flag {
+  position: absolute;
+  max-height: 100%;
+}
+/*# sourceMappingURL=style.css.map */

@@ -17,14 +17,37 @@
       <form class="col-5">
         <div class="form-group">
           <label for="exampleInputEmail1">Search for country: </label>
-          <input type="text" class="form-control" id="country-name">
+          <input type="text" class="form-control input-search" id="country-name">
         </div>
-        <button type="submit" href="#" class="btn btn-primary">Search</button>
+        <button type="submit" class="btn btn-primary btn-search">Search</button>
       </form>
     </div>
-    <div>
-
-    </div>
+    <table class="table my-5">
+      <thead>
+        <tr>
+          <th scope="col">Country</th>
+          <th scope="col">Currency</th>
+          <th scope="col">Region</th>
+          <th scope="col">Flag</th>
+        </tr>
+      </thead>
+      <tbody class="country-container">
+      </tbody>
+    </table>
   </div>
+
+  <script id="template-country" type="text/x-handlebars-template">
+
+    <tr>
+      <td class="country">{{name}}</td>
+      <td class="currency">{{currency}}</td>
+      <td class="region">{{region}}</td>
+      <td class="flag"><img class="country-flag" src="{{flag}}"></img></td>
+    </tr>
+
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.0/handlebars.min.js"></script>
+  <script src="js/script.js"></script>
 </body>
 </html>
