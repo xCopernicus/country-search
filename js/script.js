@@ -47,18 +47,19 @@ class CountryGenerate {
       .then(function(parsedResponse){
         console.log('parsedResponse: ', parsedResponse);
 
-        thisCountryGenerate.data = parsedResponse[0];
+        thisCountryGenerate.data = parsedResponse;
         thisCountryGenerate.generate();
       });
   }
 
   generate() {
-      const info = {
-        name: this.data.name,
-        currency: this.data.currencies[0].name,
-        region: this.data.region,
-        flag: this.data.flag,
-      }
+    const info = {
+      status: this.data.status,
+      name: this.data[0].name,
+      currency: this.data[0].currencies[0].name,
+      region: this.data[0].region,
+      flag: this.data[0].flag,
+    }
     this.countryContainer.innerHTML = templates.country(info);
   }
 }
