@@ -15,30 +15,54 @@ const select = {
     field: 'input.input-search',
     btn: 'button.btn-search',
   },
-}
+};
 
 const templates = {
   country: Handlebars.compile(document.querySelector(select.templateOf.country).innerHTML),
 };
 
 class CountryGenerate {
-  constructor(id) {
-    this.id = id;
-    this.getData();
+  constructor(data) {
+    this.data = data;
     this.getElements();
-    this.data = {};
+    this.generate();
   }
 
   getElements() {
     this.countryContainer = document.querySelector(select.countryContainer);
   }
 
+  generate() {
+    const info = {countries: {}};
 
-  getData() {
-    const thisCountryGenerate = this;
-    const url = 'https://restcountries.eu/rest/v2/name/' + this.id;
+    for (const country of this.data) {
+      const countryName = country.name.toLowerCase();
+      info.countries[countryName] = {};
+      info.countries[countryName].name = country.name;
+      info.countries[countryName].currency = country.currencies[0].name;
+      info.countries[countryName].region = country.region;
+      info.countries[countryName].flag = country.flag;
+    }
+
+    this.countryContainer.innerHTML = templates.country(info);
+  }
+}
+
+
+const app = {
+  init: function() {
+    const searchField = document.querySelector(select.search.field);
+    const searchButton = document.querySelector(select.search.btn);
+
+    searchButton.addEventListener('click', function(event) {
+      event.preventDefault();
+      app.getData(searchField.value);
+    });
+  },
+
+  getData: function(searchValue) {
+    const url = 'https://restcountries.eu/rest/v2/name/' + searchValue;
     console.log(url);
-
 
     fetch(url)
       .then(function(rawResponse){
@@ -47,34 +71,13 @@ class CountryGenerate {
       .then(function(parsedResponse){
         console.log('parsedResponse: ', parsedResponse);
 
-        thisCountryGenerate.data = parsedResponse;
-        thisCountryGenerate.generate();
+        app.data = parsedResponse;
+        new CountryGenerate(app.data);
+      })
+      .catch(function() {
+        alert('Error! Enter a name of a country');
       });
   }
-
-  generate() {
-    const info = {
-      status: this.data.status,
-      name: this.data[0].name,
-      currency: this.data[0].currencies[0].name,
-      region: this.data[0].region,
-      flag: this.data[0].flag,
-    }
-    this.countryContainer.innerHTML = templates.country(info);
-  }
-}
-
-
-const app = {
-  init: function() {
-    const searchButton = document.querySelector(select.search.btn);
-    const searchField = document.querySelector(select.search.field);
-
-    searchButton.addEventListener('click', function(event) {
-      event.preventDefault();
-      new CountryGenerate(searchField.value)
-    });
-  }
-}
+};
 
 app.init();

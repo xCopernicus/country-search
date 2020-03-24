@@ -2,12 +2,13 @@ body {
   background-color: #9b59b6;
 }
 
-.flag {
+td.flag-container {
   position: relative;
+  padding: 5px;
 }
 
-.country-flag {
+.flag {
   position: absolute;
-  max-height: 100%;
+  max-height: 80%;
 }
 /*# sourceMappingURL=style.css.map */
